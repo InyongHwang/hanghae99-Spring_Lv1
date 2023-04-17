@@ -1,7 +1,6 @@
 package com.sparta.hanghae99springlv1.controller;
 
 import com.sparta.hanghae99springlv1.dto.BoardRequestDto;
-import com.sparta.hanghae99springlv1.dto.BoardResponseDto;
 import com.sparta.hanghae99springlv1.entity.Board;
 import com.sparta.hanghae99springlv1.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +31,7 @@ public class BoardController {
     }
 
     @GetMapping("/api/posts/{id}")
-    public BoardResponseDto detailPost(@PathVariable Long id) {
+    public Board detailPost(@PathVariable Long id) {
         return boardService.detail(id);
     }
 

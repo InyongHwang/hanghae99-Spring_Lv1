@@ -13,14 +13,14 @@ import javax.persistence.*;
 public class Board extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    //@JsonIgnore
+    @JsonIgnore
     private Long id;
 
     @Column(nullable = false)
     private String username;
 
     @Column(nullable = false)
-    //@JsonIgnore
+    @JsonIgnore
     private String password;
 
     @Column(nullable = false)

@@ -1,7 +1,6 @@
 package com.sparta.hanghae99springlv1.service;
 
 import com.sparta.hanghae99springlv1.dto.BoardRequestDto;
-import com.sparta.hanghae99springlv1.dto.BoardResponseDto;
 import com.sparta.hanghae99springlv1.entity.Board;
 import com.sparta.hanghae99springlv1.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
@@ -51,11 +50,10 @@ public class BoardService {
         return "비밀번호가 일치하지 않습니다.";
     }
 
-    public BoardResponseDto detail(Long id) {
+    public Board detail(Long id) {
         Board board = boardRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("게시글이 존재하지 않습니다.")
         );
-
-        return new BoardResponseDto(board);
+        return board;
     }
 }
