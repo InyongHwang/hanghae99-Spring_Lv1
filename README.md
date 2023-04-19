@@ -11,3 +11,8 @@
 
 ### Use Case
 ![image](https://user-images.githubusercontent.com/123296558/232387410-3cb8400f-5679-444c-a721-86399480f280.png)
+
+---
+
+### ERD
+![image](https://user-images.githubusercontent.com/123296558/232786536-b252c74d-5349-4a2a-bb09-d9ecdbf405d5.png)
