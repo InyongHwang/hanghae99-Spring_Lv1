@@ -5,11 +5,12 @@ import com.sparta.hanghae99springlv1.dto.SignupRequestDto;
 import com.sparta.hanghae99springlv1.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/api/user")
@@ -20,15 +21,13 @@ public class UserController {
 
     @ResponseBody
     @PostMapping("/signup")
-    public String signup(@Valid SignupRequestDto signupRequestDto) {
-        userService.signup(signupRequestDto);
-        return "201 Created";
+    public String signup(SignupRequestDto signupRequestDto) {
+        return userService.signup(signupRequestDto);
     }
 
     @ResponseBody
     @PostMapping("/login")
     public String login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
-        userService.login(loginRequestDto, response);
-        return "200 OK";
+        return userService.login(loginRequestDto, response);
     }
 }
