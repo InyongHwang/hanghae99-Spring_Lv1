@@ -2,15 +2,12 @@ package com.sparta.hanghae99springlv1.controller;
 
 import com.sparta.hanghae99springlv1.dto.ReplyRequestDto;
 import com.sparta.hanghae99springlv1.dto.ReplyResponseDto;
-import com.sparta.hanghae99springlv1.dto.ReplyUpdateDto;
-import com.sparta.hanghae99springlv1.entity.Reply;
 import com.sparta.hanghae99springlv1.message.Message;
 import com.sparta.hanghae99springlv1.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/api")
