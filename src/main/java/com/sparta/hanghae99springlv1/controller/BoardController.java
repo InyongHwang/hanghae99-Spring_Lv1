@@ -2,7 +2,6 @@ package com.sparta.hanghae99springlv1.controller;
 
 import com.sparta.hanghae99springlv1.dto.BoardRequestDto;
 import com.sparta.hanghae99springlv1.dto.BoardResponseDto;
-import com.sparta.hanghae99springlv1.entity.Board;
 import com.sparta.hanghae99springlv1.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +25,8 @@ public class BoardController {
 
     // 전체 게시글 목록 조회
     @GetMapping("/posts")
-    public List<BoardResponseDto> getMemos() {
-        return boardService.getPosts();
+    public List<BoardResponseDto> viewAllPost() {
+        return boardService.viewAllPost();
     }
 
     // 게시글 작성
@@ -39,21 +38,21 @@ public class BoardController {
 
     // 선택한 게시글 조회
     @GetMapping("/posts/{id}")
-    public BoardResponseDto detailPost(@PathVariable Long id) {
+    public BoardResponseDto viewSelectPost(@PathVariable Long id) {
         // 응답 보내기
-        return boardService.detail(id);
+        return boardService.viewSelectPost(id);
     }
 
     // 선택한 게시글 수정
     @PutMapping("/posts/{id}")
     public BoardResponseDto updatePost(@PathVariable Long id,
                                        @RequestBody BoardRequestDto requestDto, HttpServletRequest request) {
-        return boardService.update(id, requestDto, request);
+        return boardService.updatePost(id, requestDto, request);
     }
 
     // 선택한 게시글 삭제
     @DeleteMapping("/posts/{id}")
     public String deletePost(@PathVariable Long id, HttpServletRequest request) {
-        return boardService.delete(id, request);
+        return boardService.deletePost(id, request);
     }
 }

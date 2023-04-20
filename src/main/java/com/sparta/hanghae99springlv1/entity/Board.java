@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -23,6 +25,9 @@ public class Board extends Timestamped {
 
     @Column(nullable = false)
     private String username;
+
+    @OneToMany //(mappedBy = "board", fetch = FetchType.EAGER)
+    private List<Reply> replyList = new ArrayList<>();
 
     public Board(BoardRequestDto requestDto, String username) {
         this.title = requestDto.getTitle();
