@@ -30,4 +30,11 @@ public class Reply extends Timestamped {
         this.user = user;
         this.contents = requestDto.getContents();
     }
+
+    public void update(ReplyRequestDto requestDto, User user) {
+        this.postId = requestDto.getPostId();
+        this.user = user;
+        this.contents = requestDto.getContents();
+    }
+
 }

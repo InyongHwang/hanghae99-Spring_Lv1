@@ -2,6 +2,7 @@ package com.sparta.hanghae99springlv1.controller;
 
 import com.sparta.hanghae99springlv1.dto.LoginRequestDto;
 import com.sparta.hanghae99springlv1.dto.SignupRequestDto;
+import com.sparta.hanghae99springlv1.message.Message;
 import com.sparta.hanghae99springlv1.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -21,13 +22,13 @@ public class UserController {
 
     @ResponseBody
     @PostMapping("/signup")
-    public String signup(SignupRequestDto signupRequestDto) {
+    public Message signup(SignupRequestDto signupRequestDto) {
         return userService.signup(signupRequestDto);
     }
 
     @ResponseBody
     @PostMapping("/login")
-    public String login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
+    public Message login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
         return userService.login(loginRequestDto, response);
     }
 }
