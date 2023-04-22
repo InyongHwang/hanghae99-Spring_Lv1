@@ -9,6 +9,7 @@ import java.util.List;
 
 @Getter
 public class BoardResponseDto {
+    // for commit
     private String title;
     private String contents;
     private String username;

@@ -25,6 +25,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class JwtUtil {
 
+    // for commit
     public static final String AUTHORIZATION_HEADER = "Authorization";
     public static final String AUTHORIZATION_KEY = "auth";
     private static final String BEARER_PREFIX = "Bearer ";

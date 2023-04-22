@@ -18,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardController {
 
+    // for commit
     private final BoardService boardService;
 
     // home page
