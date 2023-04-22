@@ -19,6 +19,5 @@ public class Timestamped {
     private LocalDateTime createAt;
 
     @LastModifiedDate
-    @JsonIgnore
     private LocalDateTime modifiedAt;
 }

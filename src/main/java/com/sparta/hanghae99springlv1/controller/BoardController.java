@@ -3,8 +3,10 @@ package com.sparta.hanghae99springlv1.controller;
 import com.sparta.hanghae99springlv1.dto.BoardRequestDto;
 import com.sparta.hanghae99springlv1.dto.BoardResponseDto;
 import com.sparta.hanghae99springlv1.message.Message;
+import com.sparta.hanghae99springlv1.security.UserDetailsImpl;
 import com.sparta.hanghae99springlv1.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -32,28 +34,26 @@ public class BoardController {
 
     // 게시글 작성
     @PostMapping("/posts")
-    public BoardResponseDto createPost(@RequestBody BoardRequestDto requestDto, HttpServletRequest request) {
-        // 응답 보내기
-        return boardService.createPost(requestDto, request);
+    public BoardResponseDto createPost(@RequestBody BoardRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return boardService.createPost(requestDto, userDetails.getUser());
     }
 
     // 선택한 게시글 조회
     @GetMapping("/posts/{postId}")
     public BoardResponseDto viewSelectPost(@PathVariable Long postId) {
-        // 응답 보내기
         return boardService.viewSelectPost(postId);
     }
 
     // 선택한 게시글 수정
     @PutMapping("/posts/{postId}")
     public BoardResponseDto updatePost(@PathVariable Long postId,
-                                       @RequestBody BoardRequestDto requestDto, HttpServletRequest request) {
-        return boardService.updatePost(postId, requestDto, request);
+                                       @RequestBody BoardRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return boardService.updatePost(postId, requestDto, userDetails.getUser());
     }
 
     // 선택한 게시글 삭제
     @DeleteMapping("/posts/{id}")
-    public Message deletePost(@PathVariable Long id, HttpServletRequest request) {
-        return boardService.deletePost(id, request);
+    public Message deletePost(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return boardService.deletePost(id, userDetails.getUser());
     }
 }

@@ -3,7 +3,6 @@ package com.sparta.hanghae99springlv1.entity;
 import com.sparta.hanghae99springlv1.dto.ReplyRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -36,5 +35,4 @@ public class Reply extends Timestamped {
         this.user = user;
         this.contents = requestDto.getContents();
     }
-
 }
