@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/api/user")
@@ -22,7 +23,7 @@ public class UserController {
 
     @ResponseBody
     @PostMapping("/signup")
-    public Message signup(SignupRequestDto signupRequestDto) {
+    public Message signup(@Valid SignupRequestDto signupRequestDto) {
         return userService.signup(signupRequestDto);
     }
 

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ReplyRepository extends JpaRepository<Reply, Long> {
-    List<Reply> findAllByPostIdOrderByCreateAtDesc(Long id);
-    void deleteAllByPostId(Long id);
+    List<Reply> findAllByPost_IdOrderByCreateAtDesc(Long postId);
+    void deleteAllByPost_Id(Long postId);
     Optional<Reply> findByIdAndUser_Id(Long replyId, Long userId);
 }

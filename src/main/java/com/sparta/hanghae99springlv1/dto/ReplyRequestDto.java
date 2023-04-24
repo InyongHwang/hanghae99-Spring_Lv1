@@ -1,14 +1,14 @@
 package com.sparta.hanghae99springlv1.dto;
 
+import lombok.Data;
 import lombok.Getter;
 
+@Data
 @Getter
 public class ReplyRequestDto {
-    private Long postId;
     private String contents;
 
-    public ReplyRequestDto(Long postId, String contents) {
-        this.postId = postId;
+    public ReplyRequestDto(String contents) {
         this.contents = contents;
     }
 }

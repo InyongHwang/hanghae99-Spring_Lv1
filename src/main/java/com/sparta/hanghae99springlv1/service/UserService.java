@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
-import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -30,23 +29,7 @@ public class UserService {
     @Transactional
     public Message signup(SignupRequestDto signupRequestDto) {
         String username = signupRequestDto.getUsername();
-        String password = signupRequestDto.getPassword();
-
-        // 입력 형식 확인
-        // username 불일치, password 일치
-        if (!Pattern.matches("^[a-z0-9]{4,10}$", username) && Pattern.matches("^[a-zA-Z0-9!@#$%^&*()_+]{8,15}$", password)) {
-             return new Message("아이디는 최소 4자 이상, 10자 이하이며 알파벳 소문자(a-z), 숫자(0-9)로 구성되어야 합니다.", 400);
-        }
-        // username 일치, password 불일치
-        else if (Pattern.matches("^[a-z0-9]{4,10}$", username) && !Pattern.matches("^[a-zA-Z0-9!@#$%^&*()_+]{8,15}$", password)) {
-            return new Message("비밀번호는 최소 8자 이상, 15자 이하이며 알파벳 대소문자(a-z, A-Z), 숫자(0-9) 및 특수문자로 구성되어야 합니다.", 400);
-        }
-        // username 불일치, password 불일치
-        else if (!Pattern.matches("^[a-z0-9]{4,10}$", username) && !Pattern.matches("^[a-zA-Z0-9!@#$%^&*()_+]{8,15}$", password)) {
-            return new Message("아이디는 최소 4자 이상, 10자 이하이며 알파벳 소문자(a-z), 숫자(0-9)로 구성되어야 하며,\n" +
-                                    "비밀번호는 최소 8자 이상, 15자 이하이며 알파벳 대소문자(a-z, A-Z), 숫자(0-9) 및 특수문자로 구성되어야 합니다.",
-                                400);
-        }
+        String password = passwordEncoder.encode(signupRequestDto.getPassword());
 
         // 회원 중복 확인
         Optional<User> found = userRepository.findByUsername(username);
@@ -63,7 +46,7 @@ public class UserService {
             role = UserRoleEnum.ADMIN;
         }
 
-        User user = new User(username, passwordEncoder.encode(password), role);
+        User user = new User(username, password, role);
         userRepository.save(user);
         return new Message("회원가입 성공", 200);
     }

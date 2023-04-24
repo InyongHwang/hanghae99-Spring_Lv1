@@ -20,16 +20,15 @@ public class ReplyController {
     final private ReplyService replyService;
 
     // 댓글 작성
-    @PostMapping("/reply")
-    public ReplyResponseDto createReply(@RequestBody ReplyRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        // 응답 보내기
-        return replyService.createReply(requestDto, userDetails.getUsername());
+    @PostMapping("/reply/{postId}")
+    public ReplyResponseDto createReply(@PathVariable Long postId, @RequestBody ReplyRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return replyService.createReply(postId, requestDto, userDetails.getUser());
     }
 
     // 댓글 수정
     @PutMapping("/reply/{replyId}")
-    public ReplyResponseDto updateReply(@PathVariable Long replyId, @RequestBody String contents, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return replyService.updateReply(replyId, contents, userDetails.getUser());
+    public ReplyResponseDto updateReply(@PathVariable Long replyId, @RequestBody ReplyRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return replyService.updateReply(replyId, requestDto, userDetails.getUser());
     }
 
     // 댓글 삭제
