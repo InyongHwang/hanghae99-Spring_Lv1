@@ -46,7 +46,7 @@ public class PostService {
     // 선택한 게시글 조회
     public PostResponseDto viewSelectPost(Long postId) {
         Post post = postRepository.findById(postId).orElseThrow(
-                () -> new IllegalArgumentException("게시글이 존재하지 않습니다.")
+                () -> new IllegalArgumentException("게시글을 찾을 수 없습니다.")
         );
         return new PostResponseDto(post, getReplyList(postId));
     }
@@ -54,18 +54,14 @@ public class PostService {
     // 선택한 게시글 수정
     @Transactional
     public PostResponseDto updatePost(Long postId, PostRequestDto requestDto, User user) {
-        // 사용자 권한 가져와서
-        UserRoleEnum userRoleEnum = user.getRole();
 
-        // ADMIN 이면 모든 게시글 수정 가능
-        Post post;
-        if (userRoleEnum == UserRoleEnum.ADMIN) {
-            post = postRepository.findById(postId)
-                    .orElseThrow(() -> new NullPointerException("게시글이 존재하지 않습니다."));
-        } else {
-            // USER 이면 자기 게시글 수정 가능, 현재 유저가 작성한 게시글이 맞는지 검증
-            post = postRepository.findByIdAndUser_Id(postId, user.getId())
-                    .orElseThrow(() -> new NullPointerException("현재 사용자가 작성한 게시글이 아닙니다."));
+        // 게시글이 존재하는지 확인
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다."));
+
+        // 사용자 권한이 USER이고, 자기가 작성한 게시글이 아니라면 오류 발생
+        if (user.getRole() == UserRoleEnum.USER && !post.getUser().getId().equals(user.getId())) {
+            throw new IllegalArgumentException("현재 사용자가 작성한 게시글이 아닙니다.");
         }
 
         post.update(requestDto);
@@ -75,18 +71,14 @@ public class PostService {
     // 게시글 삭제
     @Transactional
     public Message deletePost(Long postId, User user) {
-        // 사용자 권한 가져와서
-        UserRoleEnum userRoleEnum = user.getRole();
 
-        // ADMIN 이면 모든 게시글 삭제 가능
-        Post post;
-        if (userRoleEnum == UserRoleEnum.ADMIN) {
-            post = postRepository.findById(postId)
-                    .orElseThrow(() -> new NullPointerException("게시글이 존재하지 않습니다."));
-        } else {
-            // USER 이면 자기 게시글 삭제 가능, 현재 유저가 작성한 게시글이 맞는지 검증
-            post = postRepository.findByIdAndUser_Id(postId, user.getId())
-                    .orElseThrow(() -> new NullPointerException("현재 사용자가 작성한 게시글이 아닙니다."));
+        // 게시글이 존재하는지 확인
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다."));
+
+        // 사용자 권한이 USER이고, 자기가 작성한 게시글이 아니라면 오류 발생
+        if (user.getRole() == UserRoleEnum.USER && !post.getUser().getId().equals(user.getId())) {
+            throw new IllegalArgumentException("현재 사용자가 작성한 게시글이 아닙니다.");
         }
 
         // 게시글에 달린 댓글의 좋아요 삭제

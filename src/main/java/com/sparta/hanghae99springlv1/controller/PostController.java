@@ -17,7 +17,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostController {
 
-    // for commit
     private final PostService postService;
 
     // home page

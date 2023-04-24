@@ -31,7 +31,7 @@ public class Reply extends Timestamped {
     private User user;
 
     public Reply(ReplyRequestDto requestDto, Post post, User user) {
-        this.contents = contents;
+        this.contents = requestDto.getContents();
         this.post = post;
         this.user = user;
         this.replyLike = 0;

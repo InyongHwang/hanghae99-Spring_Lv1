@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 public class ReplyController {
 
-    // for commit
     final private ReplyService replyService;
 
     // 댓글 작성

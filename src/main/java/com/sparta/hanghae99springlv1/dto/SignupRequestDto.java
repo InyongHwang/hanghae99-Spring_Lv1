@@ -10,12 +10,10 @@ import javax.validation.constraints.Size;
 @Setter
 public class SignupRequestDto {
 
-    @Size(min = 4, max = 10)
-    @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z]).{4,10}$")
+    @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z]).{4,10}$", message = "아이디는 4-10자 알파벳 소문자, 숫자로 작성해주세요.")
     private String username;
 
-    @Size(min = 8, max = 15)
-    @Pattern(regexp = "^(?=.*\\d)(?=.*[a-zA-Z])(?=.*[~!@#$%^&*()_+|<>?:{}])(?=\\S+$).{8,15}$")
+    @Pattern(regexp = "^(?=.*\\d)(?=.*[a-zA-Z])(?=.*[~!@#$%^&*()_+|<>?:{}])(?=\\S+$).{8,15}$", message = "비밀번호는 8-15자 알파벳 대소문자, 숫자, 특수문자로 작성해주세요.")
     private String password;
 
     private boolean admin = false;

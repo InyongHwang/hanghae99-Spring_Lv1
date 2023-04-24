@@ -1,10 +1,9 @@
 package com.sparta.hanghae99springlv1.controller;
 
 import com.sparta.hanghae99springlv1.message.Message;
-import com.sparta.hanghae99springlv1.security.LikeService;
+import com.sparta.hanghae99springlv1.service.LikeService;
 import com.sparta.hanghae99springlv1.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
