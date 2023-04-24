@@ -8,10 +8,10 @@ import java.util.List;
 
 @Getter
 public class PostResponseDto {
-    // for commit
     private String title;
     private String contents;
     private String username;
+    private int postLike;
     private LocalDateTime createAt;
     private LocalDateTime modifiedAt;
     private List<ReplyResponseDto> replyList;
@@ -20,6 +20,7 @@ public class PostResponseDto {
         this.title = post.getTitle();
         this.contents = post.getContents();
         this.username = post.getUser().getUsername();
+        this.postLike = post.getPostLike();
         this.createAt = post.getCreateAt();
         this.modifiedAt = post.getModifiedAt();
         this.replyList = replyList;

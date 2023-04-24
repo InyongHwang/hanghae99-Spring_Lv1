@@ -3,11 +3,9 @@ package com.sparta.hanghae99springlv1.service;
 import com.sparta.hanghae99springlv1.dto.PostRequestDto;
 import com.sparta.hanghae99springlv1.dto.PostResponseDto;
 import com.sparta.hanghae99springlv1.dto.ReplyResponseDto;
-import com.sparta.hanghae99springlv1.entity.Post;
-import com.sparta.hanghae99springlv1.entity.Reply;
-import com.sparta.hanghae99springlv1.entity.User;
-import com.sparta.hanghae99springlv1.entity.UserRoleEnum;
+import com.sparta.hanghae99springlv1.entity.*;
 import com.sparta.hanghae99springlv1.message.Message;
+import com.sparta.hanghae99springlv1.repository.LikeRepository;
 import com.sparta.hanghae99springlv1.repository.PostRepository;
 import com.sparta.hanghae99springlv1.repository.ReplyRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +22,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final ReplyRepository replyRepository;
+    private final LikeRepository likeRepository;
 
     // 전체 게시글 목록 조회
     @Transactional(readOnly = true)
@@ -40,7 +40,6 @@ public class PostService {
     public PostResponseDto createPost(PostRequestDto requestDto, User user) {
         // 오청받은 DTO로 DB에 저장할 객체 만들기
         Post post = postRepository.saveAndFlush(new Post(requestDto, user));
-
         return new PostResponseDto(post, new ArrayList<>());
     }
 
@@ -49,7 +48,6 @@ public class PostService {
         Post post = postRepository.findById(postId).orElseThrow(
                 () -> new IllegalArgumentException("게시글이 존재하지 않습니다.")
         );
-
         return new PostResponseDto(post, getReplyList(postId));
     }
 
@@ -70,8 +68,7 @@ public class PostService {
                     .orElseThrow(() -> new NullPointerException("현재 사용자가 작성한 게시글이 아닙니다."));
         }
 
-        post.update(requestDto, user);
-
+        post.update(requestDto);
         return new PostResponseDto(post, getReplyList(postId));
     }
 
@@ -92,9 +89,24 @@ public class PostService {
                     .orElseThrow(() -> new NullPointerException("현재 사용자가 작성한 게시글이 아닙니다."));
         }
 
+        // 게시글에 달린 댓글의 좋아요 삭제
+        // 1. 게시글에 달린 댓글 Id(replyId) 조회
+        List<Long> replyIdList = replyRepository.findAllByPost_IdOrderByCreateAtDesc(postId)
+                .stream().map(Reply::getId).toList();
+        // 2. 게시글에 달린 댓글의 like 삭제
+        for (Long replyId : replyIdList) {
+            likeRepository.deleteAllByReplyId(replyId);
+        }
+
+        // 게시글 좋아요 삭제
+        likeRepository.deleteAllByPostId(postId);
+
+        // 게시글에 달린 댓글 전체 삭제
         replyRepository.deleteAllByPost_Id(postId);
+
+        // 게시글 삭제
         postRepository.deleteById(postId);
-        return new Message("게시글 삭제 성공", 200);
+        return CustomStatus.DeletePostSuccess.toMessage();
     }
 
     private List<ReplyResponseDto> getReplyList(Long postId) {

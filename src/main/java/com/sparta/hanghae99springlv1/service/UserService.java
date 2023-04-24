@@ -2,12 +2,14 @@ package com.sparta.hanghae99springlv1.service;
 
 import com.sparta.hanghae99springlv1.dto.LoginRequestDto;
 import com.sparta.hanghae99springlv1.dto.SignupRequestDto;
+import com.sparta.hanghae99springlv1.entity.CustomStatus;
 import com.sparta.hanghae99springlv1.entity.User;
 import com.sparta.hanghae99springlv1.entity.UserRoleEnum;
 import com.sparta.hanghae99springlv1.jwt.JwtUtil;
 import com.sparta.hanghae99springlv1.message.Message;
 import com.sparta.hanghae99springlv1.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,7 +50,8 @@ public class UserService {
 
         User user = new User(username, password, role);
         userRepository.save(user);
-        return new Message("회원가입 성공", 200);
+//        return new Message("회원가입 성공", 200);
+        return CustomStatus.SignupSuccess.toMessage();
     }
 
     // Security + Jwt 를 사용한 로그인
@@ -67,6 +70,6 @@ public class UserService {
         }
 
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUsername(), user.getRole()));
-        return new Message("로그인 성공", 200);
+        return CustomStatus.LoginSuccess.toMessage();
     }
 }

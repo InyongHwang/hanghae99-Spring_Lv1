@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 public class ReplyResponseDto {
     private Long id;
     private String contents;
+    private int replyLike;
     private LocalDateTime createAt;
     private LocalDateTime modifiedAt;
     private String username;
@@ -16,6 +17,7 @@ public class ReplyResponseDto {
     public ReplyResponseDto(Reply reply) {
         this.id = reply.getId();
         this.contents = reply.getContents();
+        this.replyLike = reply.getReplyLike();
         this.createAt = reply.getCreateAt();
         this.modifiedAt = reply.getModifiedAt();
         this.username = reply.getUser().getUsername();

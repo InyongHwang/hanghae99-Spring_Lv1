@@ -2,10 +2,7 @@ package com.sparta.hanghae99springlv1.service;
 
 import com.sparta.hanghae99springlv1.dto.ReplyRequestDto;
 import com.sparta.hanghae99springlv1.dto.ReplyResponseDto;
-import com.sparta.hanghae99springlv1.entity.Post;
-import com.sparta.hanghae99springlv1.entity.Reply;
-import com.sparta.hanghae99springlv1.entity.User;
-import com.sparta.hanghae99springlv1.entity.UserRoleEnum;
+import com.sparta.hanghae99springlv1.entity.*;
 import com.sparta.hanghae99springlv1.jwt.JwtUtil;
 import com.sparta.hanghae99springlv1.message.Message;
 import com.sparta.hanghae99springlv1.repository.PostRepository;
@@ -20,9 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReplyService {
 
     private final ReplyRepository replyRepository;
-    private final UserRepository userRepository;
     private final PostRepository postRepository;
-    private final JwtUtil jwtUtil;
 
     // 댓글 작성
     @Transactional
@@ -77,6 +72,6 @@ public class ReplyService {
         }
 
         replyRepository.deleteById(replyId);
-        return new Message("댓글 삭제 성공", 200);
+        return CustomStatus.DeleteReplySuccess.toMessage();
     }
 }

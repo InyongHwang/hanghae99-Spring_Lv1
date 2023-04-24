@@ -28,6 +28,9 @@ public class Post extends Timestamped {
     @JoinColumn(name = "userId")
     private User user;
 
+    @Column(nullable = false)
+    private int postLike;
+
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Reply> replyList = new ArrayList<>();
 
@@ -35,11 +38,19 @@ public class Post extends Timestamped {
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
         this.user = user;
+        this.postLike = 0;
     }
 
-    public void update(PostRequestDto requestDto, User user) {
+    public void update(PostRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
-        this.user = user;
+    }
+
+    public void like() {
+        this.postLike += 1;
+    }
+
+    public void unlike() {
+        this.postLike -= 1;
     }
 }

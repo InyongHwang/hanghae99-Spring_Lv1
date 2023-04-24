@@ -19,6 +19,9 @@ public class Reply extends Timestamped {
     @Column(nullable = false)
     private String contents;
 
+    @Column(nullable = false)
+    private int replyLike;
+
     @JoinColumn(nullable = false, name = "postId")
     @ManyToOne(fetch = FetchType.LAZY)
     private Post post;
@@ -31,12 +34,20 @@ public class Reply extends Timestamped {
         this.contents = contents;
         this.post = post;
         this.user = user;
+        this.replyLike = 0;
     }
 
     public void update(ReplyRequestDto requestDto) {
         this.contents = requestDto.getContents();
     }
 
+    public void like() {
+        this.replyLike += 1;
+    }
+
+    public void unlike() {
+        this.replyLike -= 1;
+    }
     //    public Reply(ReplyRequestDto requestDto, User user) {
 //        this.postId = requestDto.getPostId();
 //        this.user = user;
